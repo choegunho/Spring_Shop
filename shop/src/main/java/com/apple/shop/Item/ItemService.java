@@ -26,6 +26,15 @@ public class ItemService {
 
     public void updateItem(Integer id, String title, Integer price){
         Optional<Item> result = itemRepository.findById(id);
+
+        if(title.length() >= 100){
+            throw new IllegalArgumentException("Title must be less than 100 characters");
+        }
+
+        if(price < 0){
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+
         if(!result.isPresent()){
             throw new IllegalArgumentException("Item with id " + id + " not found.");
         } else{
